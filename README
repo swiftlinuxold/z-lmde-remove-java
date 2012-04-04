@@ -14,3 +14,36 @@ java5-runtime (not available in the regular repositories)
 jre (not available in the regular repositories)
 
 Thus, the first action in the main.py script is to add gcj-jre.  The second action is to remove sun-java6-jre and sun-java6-bin.
+
+Commands:
+apt-get purge -s (package name): simulation only
+apt-cache depends (package name): lists dependencies
+
+libreoffice-calc
+  Depends: libreoffice-core
+  Depends: libreoffice-base-core
+  Depends: libc6
+  Depends: libcolamd2.7.1
+  Depends: libgcc1
+  Depends: libstdc++6
+  Depends: libstlport4.6ldbl
+  Depends: ure
+  Depends: lp-solve
+
+libreoffice-writer
+  Depends: libreoffice-core
+  Depends: libreoffice-base-core
+  Depends: libc6
+  Depends: libgcc1
+  Depends: libicu44
+  Depends: libstdc++6
+  Depends: libstlport4.6ldbl
+  Depends: libwpd-0.9-9
+  Depends: libwpg-0.2-2
+  Depends: libwps-0.2-2
+  Depends: ure
+  Depends: zlib1g
+
+
+
+
