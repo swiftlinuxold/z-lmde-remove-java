@@ -53,7 +53,7 @@ purge_packages ('libreoffice libreoffice-emailmerge libreoffice-gnome python-uno
 
 # Remove LibreOffice Base
 os.system ('echo Purging libreoffice-base libreoffice-report-builder-bin')
-os.system ('echo This saves 12.0 MB of disk space.)
+os.system ('echo This saves 12.0 MB of disk space.')
 purge_packages ('libreoffice-base libreoffice-report-builder-bin')
 
 # Remove LibreOffice Draw and Impress
