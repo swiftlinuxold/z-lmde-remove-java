@@ -24,9 +24,8 @@ else:
 # Everything up to this point is common to all Python scripts called by shared-*.sh
 # =================================================================================
 
-os.system ("echo ========================================")
-os.system ("echo BEGIN SWITCHING TO LIGHTER JAVA PACKAGES")
-print ("NOTE: The screen output has been suppressed due to excessive volume.")
+def message (string):
+    os.system ('echo ' + string)
 
 def purge_packages (packages):
     os.system ('echo PURGING ' + packages)
@@ -36,45 +35,30 @@ def package_add (name):
     os.system ('echo ADDING ' + name)
     os.system ('apt-get install -qq ' + name)
 
-# Add gcj-jre as a lighter replacement for sun-java6-jre and sun-java6-bin (41.4MB).
-os.system ('echo Installing gcj-jre and dependent packages.')
-os.system ('echo This requires 12.0 MB of downloads and 41.4 MB of additional disk space.')
-package_add ('gcj-jre')
+def purge_packages_file (filename):
+    list_with_newlines = open(filename, 'r').read()
+    list_with_spaces = list_with_newlines.replace ('\n', ' ')
+    os.system ('apt-get purge -qq ' + list_with_spaces)
 
-# Now that gcj-jre is installed, sun-java6-jre and sun-java6-bin are no longer needed.
-os.system ('echo Purging sun-java6-jre and sun-java6-bin.')
-os.system ('echo This saves 104 MB of disk space.')
-purge_packages ('sun-java6-jre sun-java6-bin')
+message ("========================================")
+message ("BEGIN REMOVING SELECTED JAVA PACKAGES")
+print ("NOTE: The screen output has been suppressed due to excessive volume.")
 
-# Removing selected LibreOffice packages
-os.system ('echo Purging libreoffice libreoffice-emailmerge libreoffice-gnome python-uno')
-os.system ('echo This saves 2449 kB of disk space.')
-purge_packages ('libreoffice libreoffice-emailmerge libreoffice-gnome python-uno')
+# STEP 1: PURGING LibreOffice packages other than Calc, Writer, and dependencies
+# STEP 2: PURGING heavy Java packages (including those needed only for the above LibreOffice packages to be removed)
 
-# Remove LibreOffice Base
-os.system ('echo Purging libreoffice-base libreoffice-report-builder-bin')
-os.system ('echo This saves 12.0 MB of disk space.')
+message ('REMOVING selected LibreOffice packages, keeping Calc and Writer')
+purge_packages ('libreoffice')
 purge_packages ('libreoffice-base libreoffice-report-builder-bin')
-
-# Remove LibreOffice Draw and Impress
-os.system ('echo Purging LibreOffice Draw and Impress')
-os.system ('echo This saves 11.4 MB of disk space.')
 purge_packages ('libreoffice-draw libreoffice-impress')
-
-# Remove libreoffice-filter-mobiledev and libreoffice-java-common
-os.system ('echo Purging libreoffice-filter-mobiledev libreoffice-java-common')
-os.system ('echo This saves 9126 kB of disk space.')
-purge_packages ('libreoffice-filter-mobiledev libreoffice-java-common')
-
-# Remove libreoffice-gtk
-os.system ('echo Purging libreoffice-gtk')
-os.system ('echo This saves 1012 kB of disk space.')
+purge_packages ('libreoffice-emailmerge')
+purge_packages ('libreoffice-filter-mobiledev')
+purge_packages ('libreoffice-gnome')
 purge_packages ('libreoffice-gtk')
+purge_packages ('libreoffice-java-common')
+purge_packages ('libreoffice-math')
+message ('PURGING openjdk-6-jre-headless and dependants')
+purge_packages_file (dir_develop + '/remove-java/openjdk-6-jre-headless.txt')
 
-# Remove LibreOffice Math
-os.system ('echo Purging LibreOffice Math')
-os.system ('echo This saves 1540 kB of disk space.')
-purge_packages ('libreoffice-math')      
-
-os.system ("echo FINISHED SWITCHING TO LIGHTER JAVA PACKAGES")
-os.system ("echo ===========================================")
+message ("FINISHED REMOVING SELECTED JAVA PACKAGES")
+message ("========================================")

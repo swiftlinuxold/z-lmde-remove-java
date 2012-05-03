@@ -1,0 +1,12 @@
+openjdk-6-jre-headless
+ca-certificates-java
+default-jre
+default-jre-headless
+icedtea-6-jre-cacao
+icedtea-6-jre-jamvm
+icedtea-netx
+icedtea-netx-common
+icedtea-plugin
+icedtea6-plugin
+openjdk-6-jre
+openjdk-6-jre-lib
